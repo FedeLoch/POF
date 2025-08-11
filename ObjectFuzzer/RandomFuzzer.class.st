@@ -1,5 +1,5 @@
 Class {
-	#name : 'Fuzzer',
+	#name : 'RandomFuzzer',
 	#superclass : 'Object',
 	#category : 'ObjectFuzzer-RandomObjectFuzzer',
 	#package : 'ObjectFuzzer',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Fuzzer >> classCandidates: var for: aClass [
+RandomFuzzer >> classCandidates: var for: aClass [
 
 	| selectorsToRespond |
 	selectorsToRespond := self selectorsFor: var in: aClass.
@@ -18,7 +18,7 @@ Fuzzer >> classCandidates: var for: aClass [
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> fuzzInstancesOf: aClass count: n depth: maxDepth [
+RandomFuzzer >> fuzzInstancesOf: aClass count: n depth: maxDepth [
 
 	^ (1 to: n) collect: [:i |
         self generateInstanceOf: aClass depth: maxDepth
@@ -27,7 +27,7 @@ Fuzzer >> fuzzInstancesOf: aClass count: n depth: maxDepth [
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> genInstanceVar: var for: aClass depth: maxDepth [
+RandomFuzzer >> genInstanceVar: var for: aClass depth: maxDepth [
 
 	"var -> possibleClass1 | possibleClass2 ..."
 
@@ -43,7 +43,7 @@ Fuzzer >> genInstanceVar: var for: aClass depth: maxDepth [
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> generateInstanceOf: aClass depth: maxDepth [
+RandomFuzzer >> generateInstanceOf: aClass depth: maxDepth [
 
 	"AClass -> New + var1 var2 var3 ..."
 
@@ -56,19 +56,19 @@ Fuzzer >> generateInstanceOf: aClass depth: maxDepth [
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> nilObject [
+RandomFuzzer >> nilObject [
 
 	^ nil
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> selectCandidate: candidates [
+RandomFuzzer >> selectCandidate: candidates [
 
     ^ candidates atRandom
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> selectorsFor: var class: class method: method [ 
+RandomFuzzer >> selectorsFor: var class: class method: method [ 
 
 	^ method sendNodes inject: OrderedCollection new into: [ :selectors :node | | leftNode |
 		leftNode := node.
@@ -82,7 +82,7 @@ Fuzzer >> selectorsFor: var class: class method: method [
 ]
 
 { #category : 'as yet unclassified' }
-Fuzzer >> selectorsFor: var in: aClass [
+RandomFuzzer >> selectorsFor: var in: aClass [
 
 	^ aClass methodDict values inject: OrderedCollection new into: [ :selectors :method |
 		selectors addAll: (self selectorsFor: var class: aClass method: method)
